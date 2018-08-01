@@ -1,4 +1,5 @@
 config NFC_FDP
+	depends on !KERNEL_3_13
 	tristate "Intel FDP NFC driver"
 	depends on m
 	depends on NFC_NCI
@@ -13,6 +14,7 @@ config NFC_FDP
 	  Say N if unsure.
 
 config NFC_FDP_I2C
+	depends on !KERNEL_3_19
 	tristate "NFC FDP i2c support"
 	depends on m
 	depends on NFC_FDP && I2C

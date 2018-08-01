@@ -1,4 +1,5 @@
 config RTL8723BS
+	depends on !KERNEL_3_14
 	tristate "Realtek RTL8723BS SDIO Wireless LAN NIC driver"
 	depends on m
 	depends on WLAN && MMC && CFG80211

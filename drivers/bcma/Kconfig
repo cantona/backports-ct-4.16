@@ -30,6 +30,7 @@ config BCMA_HOST_PCI
 	default y
 
 config BCMA_HOST_SOC
+	depends on !KERNEL_3_7
 	bool "Support for BCMA in a SoC"
 	help
 	  Host interface for a Broadcom AIX bus directly mapped into
@@ -61,6 +62,7 @@ config BCMA_DRIVER_PCI_HOSTMODE
 	  PCI core hostmode operation (external PCI bus).
 
 config BCMA_DRIVER_MIPS
+	depends on !KERNEL_3_3
 	bool "BCMA Broadcom MIPS core driver"
 	depends on MIPS
 	help
@@ -100,6 +102,7 @@ config BCMA_DRIVER_GMAC_CMN
 	  If unsure, say N
 
 config BCMA_DRIVER_GPIO
+	depends on !KERNEL_4_5
 	bool "BCMA GPIO driver"
 	depends on GPIOLIB
 	select GPIOLIB_IRQCHIP if BCMA_HOST_SOC

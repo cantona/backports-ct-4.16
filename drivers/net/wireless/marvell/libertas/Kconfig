@@ -1,4 +1,5 @@
 config LIBERTAS
+	depends on !KERNEL_4_3
 	tristate "Marvell 8xxx Libertas WLAN driver support"
 	depends on m
 	depends on CFG80211

@@ -8,6 +8,9 @@ config NFC_PN544
 	  will thus not work with NXP libnfc library.
 
 config NFC_PN544_I2C
+	depends on !KERNEL_3_17
+	depends on !KERNEL_3_19
+	depends on !KERNEL_3_13
 	tristate "NXP PN544 device support (I2C)"
 	depends on m
 	depends on NFC_HCI && I2C && NFC_SHDLC

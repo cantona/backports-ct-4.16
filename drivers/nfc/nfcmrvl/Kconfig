@@ -1,4 +1,5 @@
 config NFC_MRVL
+	depends on !KERNEL_3_3
 	tristate
 	depends on m
 	help
@@ -8,6 +9,7 @@ config NFC_MRVL
 	  Marvell NFC device 8897.
 
 config NFC_MRVL_USB
+	depends on !KERNEL_3_3
 	tristate "Marvell NFC-over-USB driver"
 	depends on m
 	depends on NFC_NCI && USB
@@ -22,6 +24,7 @@ config NFC_MRVL_USB
 	  into the kernel or say M to compile it as module.
 
 config NFC_MRVL_UART
+	depends on !KERNEL_3_3
 	tristate "Marvell NFC-over-UART driver"
 	depends on m
 	depends on NFC_NCI && NFC_NCI_UART

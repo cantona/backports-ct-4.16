@@ -1,4 +1,5 @@
 config NFC_ST95HF
+	depends on !KERNEL_3_18
 	tristate "ST95HF NFC Transceiver driver"
 	depends on m
 	depends on SPI && NFC_DIGITAL

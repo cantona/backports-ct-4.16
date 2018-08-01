@@ -7,6 +7,7 @@ config NFC_ST_NCI
 	  register against it.
 
 config NFC_ST_NCI_I2C
+	depends on !KERNEL_3_19
 	tristate "STMicroelectronics ST NCI NFC driver (I2C)"
 	depends on m
 	depends on NFC_NCI && I2C
@@ -20,6 +21,7 @@ config NFC_ST_NCI_I2C
 	  Say N if unsure.
 
 config NFC_ST_NCI_SPI
+	depends on !KERNEL_3_19
 	tristate "STMicroelectronics ST NCI NFC driver (SPI)"
 	depends on m
 	depends on NFC_NCI && SPI

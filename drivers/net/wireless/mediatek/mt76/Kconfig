@@ -1,8 +1,10 @@
 config MT76_CORE
+	depends on !KERNEL_4_1
 	tristate
 	depends on m
 
 config MT76x2E
+	depends on !KERNEL_4_1
 	tristate "MediaTek MT76x2E (PCIe) support"
 	depends on m
 	select MT76_CORE

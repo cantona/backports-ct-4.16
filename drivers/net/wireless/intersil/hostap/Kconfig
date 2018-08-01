@@ -1,4 +1,6 @@
 config HOSTAP
+	depends on !KERNEL_3_10
+	depends on !KERNEL_4_3
 	tristate "IEEE 802.11 for Host AP (Prism2/2.5/3 and WEP/TKIP/CCMP)"
 	depends on m
 	depends on WIRELESS_EXT

@@ -6,6 +6,7 @@ config QTNFMAC
 	default y if QTNFMAC_PEARL_PCIE=y
 
 config QTNFMAC_PEARL_PCIE
+	depends on !KERNEL_3_13
 	tristate "Quantenna QSR10g PCIe support"
 	depends on m
 	default n

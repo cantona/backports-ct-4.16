@@ -8,6 +8,7 @@ config NFC_ST21NFCA
 	  register against it.
 
 config NFC_ST21NFCA_I2C
+	depends on !KERNEL_3_19
 	tristate "STMicroelectronics ST21NFCA NFC driver (I2C)"
 	depends on m
 	depends on NFC_HCI && I2C && NFC_SHDLC
