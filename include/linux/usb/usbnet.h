@@ -285,5 +285,9 @@ extern void usbnet_status_stop(struct usbnet *dev);
 extern void usbnet_update_max_qlen(struct usbnet *dev);
 extern void usbnet_get_stats64(struct net_device *dev,
 			       struct rtnl_link_stats64 *stats);
+#if LINUX_VERSION_IS_LESS(4,11,0)
+struct rtnl_link_stats64 *
+bp_usbnet_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats);
+#endif
 
 #endif /* __LINUX_USB_USBNET_H */

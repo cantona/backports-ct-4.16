@@ -1016,6 +1016,9 @@ void usbnet_get_stats64(struct net_device *net, struct rtnl_link_stats64 *stats)
 	}
 }
 EXPORT_SYMBOL_GPL(usbnet_get_stats64);
+#if LINUX_VERSION_IS_LESS(4,11,0)
+EXPORT_SYMBOL_GPL(bp_usbnet_get_stats64);
+#endif
 
 u32 usbnet_get_link (struct net_device *net)
 {
