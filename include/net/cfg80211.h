@@ -1205,7 +1205,7 @@ struct station_info {
 	struct cfg80211_tid_stats pertid[IEEE80211_NUM_TIDS + 1];
 };
 
-#if IS_ENABLED(CONFIG_CFG80211)
+#if IS_ENABLED(CPTCFG_CFG80211)
 /**
  * cfg80211_get_station - retrieve information about a given station
  * @dev: the device where the station is supposed to be connected to
@@ -3076,7 +3076,7 @@ struct cfg80211_ops {
 
 	void	(*rfkill_poll)(struct wiphy *wiphy);
 
-#ifdef CONFIG_NL80211_TESTMODE
+#ifdef CPTCFG_NL80211_TESTMODE
 	int	(*testmode_cmd)(struct wiphy *wiphy, struct wireless_dev *wdev,
 				void *data, int len);
 	int	(*testmode_dump)(struct wiphy *wiphy, struct sk_buff *skb,
@@ -3850,7 +3850,7 @@ struct wiphy {
 	/* the network namespace this phy lives in currently */
 	possible_net_t _net;
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 	const struct iw_handler_def *wext;
 #endif
 
@@ -4128,7 +4128,7 @@ struct wireless_dev {
 	unsigned long cac_start_time;
 	unsigned int cac_time_ms;
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 	/* wext data */
 	struct {
 		struct cfg80211_ibss_params ibss;
@@ -5162,7 +5162,7 @@ static inline void cfg80211_vendor_event(struct sk_buff *skb, gfp_t gfp)
 	__cfg80211_send_event_skb(skb, gfp);
 }
 
-#ifdef CONFIG_NL80211_TESTMODE
+#ifdef CPTCFG_NL80211_TESTMODE
 /**
  * DOC: Test mode
  *

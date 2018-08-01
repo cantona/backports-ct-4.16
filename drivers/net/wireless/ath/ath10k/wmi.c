@@ -4109,7 +4109,7 @@ void ath10k_wmi_event_dfs(struct ath10k *ar,
 		   phyerr->tsf_timestamp, tsf, buf_len);
 
 	/* Skip event if DFS disabled */
-	if (!IS_ENABLED(CONFIG_ATH10K_DFS_CERTIFIED))
+	if (!IS_ENABLED(CPTCFG_ATH10K_DFS_CERTIFIED))
 		return;
 
 	ATH10K_DFS_STAT_INC(ar, pulses_total);
@@ -6944,7 +6944,7 @@ ath10k_wmi_op_gen_vdev_start(struct ath10k *ar,
 	return skb;
 }
 
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CPTCFG_ATH10K_DEBUGFS
 /* TODO:  Should really enable this all the time, not just when DEBUGFS is enabled. --Ben */
 /* CT firmware only:
  * (re) start wmi keep-alive timer in firmware.  Once we start

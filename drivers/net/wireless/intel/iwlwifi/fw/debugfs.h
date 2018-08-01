@@ -65,7 +65,7 @@
 
 #include "runtime.h"
 
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CPTCFG_IWLWIFI_DEBUGFS
 int iwl_fwrt_dbgfs_register(struct iwl_fw_runtime *fwrt,
 			    struct dentry *dbgfs_dir);
 
@@ -102,4 +102,4 @@ static inline void iwl_fw_suspend_timestamp(struct iwl_fw_runtime *fwrt) {}
 
 static inline void iwl_fw_resume_timestamp(struct iwl_fw_runtime *fwrt) {}
 
-#endif /* CONFIG_IWLWIFI_DEBUGFS */
+#endif /* CPTCFG_IWLWIFI_DEBUGFS */

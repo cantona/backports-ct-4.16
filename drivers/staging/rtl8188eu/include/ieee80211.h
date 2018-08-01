@@ -26,7 +26,7 @@
 #define ETH_TYPE_LEN		2
 #define PAYLOAD_TYPE_LEN	1
 
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 
 #define RTL_IOCTL_HOSTAPD (SIOCIWFIRSTPRIV + 28)
 
@@ -233,7 +233,7 @@ struct ieee_param {
 			u16 key_len;
 			u8 key[0];
 		} crypt;
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 		struct {
 			u16 aid;
 			u16 capability;
@@ -250,7 +250,7 @@ struct ieee_param {
 	} u;
 };
 
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 struct ieee_param_ex {
 	u32 cmd;
 	u8 sta_addr[ETH_ALEN];

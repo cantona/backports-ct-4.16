@@ -35,7 +35,7 @@ static void _rtw_init_stainfo(struct sta_info *psta)
 	_rtw_init_sta_xmit_priv(&psta->sta_xmitpriv);
 	_rtw_init_sta_recv_priv(&psta->sta_recvpriv);
 
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 
 	INIT_LIST_HEAD(&psta->asoc_list);
 
@@ -60,7 +60,7 @@ static void _rtw_init_stainfo(struct sta_info *psta)
 
 	psta->keep_alive_trycnt = 0;
 
-#endif	/*  CONFIG_88EU_AP_MODE */
+#endif	/*  CPTCFG_88EU_AP_MODE */
 }
 
 u32	_rtw_init_sta_priv(struct	sta_priv *pstapriv)
@@ -96,7 +96,7 @@ u32	_rtw_init_sta_priv(struct	sta_priv *pstapriv)
 		psta++;
 	}
 
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 
 	pstapriv->sta_dz_bitmap = 0;
 	pstapriv->tim_bitmap = 0;
@@ -338,7 +338,7 @@ u32	rtw_free_stainfo(struct adapter *padapter, struct sta_info *psta)
 	if (!(psta->state & WIFI_AP_STATE))
 		rtw_hal_set_odm_var(padapter, HAL_ODM_STA_INFO, psta, false);
 
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 
 	spin_lock_bh(&pstapriv->auth_list_lock);
 	if (!list_empty(&psta->auth_list)) {
@@ -369,7 +369,7 @@ u32	rtw_free_stainfo(struct adapter *padapter, struct sta_info *psta)
 
 	psta->under_exist_checking = 0;
 
-#endif	/*  CONFIG_88EU_AP_MODE */
+#endif	/*  CPTCFG_88EU_AP_MODE */
 
 	spin_lock_bh(&(pfree_sta_queue->lock));
 	list_add_tail(&psta->list, get_list_head(pfree_sta_queue));
@@ -481,7 +481,7 @@ struct sta_info *rtw_get_bcmc_stainfo(struct adapter *padapter)
 u8 rtw_access_ctrl(struct adapter *padapter, u8 *mac_addr)
 {
 	u8 res = true;
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 	struct list_head *plist, *phead;
 	struct rtw_wlan_acl_node *paclnode;
 	u8 match = false;

@@ -751,7 +751,7 @@ static inline void __iwl_trans_pcie_set_bits_mask(struct iwl_trans *trans,
 {
 	u32 v;
 
-#ifdef CONFIG_IWLWIFI_DEBUG
+#ifdef CPTCFG_IWLWIFI_DEBUG
 	WARN_ON_ONCE(value & ~mask);
 #endif
 
@@ -775,7 +775,7 @@ static inline void __iwl_trans_pcie_set_bit(struct iwl_trans *trans,
 
 void iwl_trans_pcie_rf_kill(struct iwl_trans *trans, bool state);
 
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CPTCFG_IWLWIFI_DEBUGFS
 int iwl_trans_pcie_dbgfs_register(struct iwl_trans *trans);
 #else
 static inline int iwl_trans_pcie_dbgfs_register(struct iwl_trans *trans)

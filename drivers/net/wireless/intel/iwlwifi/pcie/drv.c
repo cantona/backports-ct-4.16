@@ -88,7 +88,7 @@
 
 /* Hardware specific file defines the PCI IDs table for that hardware module */
 static const struct pci_device_id iwl_hw_card_ids[] = {
-#if IS_ENABLED(CONFIG_IWLDVM)
+#if IS_ENABLED(CPTCFG_IWLDVM)
 	{IWL_PCI_DEVICE(0x4232, 0x1201, iwl5100_agn_cfg)}, /* Mini Card */
 	{IWL_PCI_DEVICE(0x4232, 0x1301, iwl5100_agn_cfg)}, /* Half Mini Card */
 	{IWL_PCI_DEVICE(0x4232, 0x1204, iwl5100_agn_cfg)}, /* Mini Card */
@@ -275,9 +275,9 @@ static const struct pci_device_id iwl_hw_card_ids[] = {
 	{IWL_PCI_DEVICE(0x0892, 0x0062, iwl135_bgn_cfg)},
 	{IWL_PCI_DEVICE(0x0893, 0x0262, iwl135_bgn_cfg)},
 	{IWL_PCI_DEVICE(0x0892, 0x0462, iwl135_bgn_cfg)},
-#endif /* CONFIG_IWLDVM */
+#endif /* CPTCFG_IWLDVM */
 
-#if IS_ENABLED(CONFIG_IWLMVM)
+#if IS_ENABLED(CPTCFG_IWLMVM)
 /* 7260 Series */
 	{IWL_PCI_DEVICE(0x08B1, 0x4070, iwl7260_2ac_cfg)},
 	{IWL_PCI_DEVICE(0x08B1, 0x4072, iwl7260_2ac_cfg)},
@@ -820,7 +820,7 @@ static const struct pci_device_id iwl_hw_card_ids[] = {
 	{IWL_PCI_DEVICE(0x40C0, 0x0A10, iwl22000_2ax_cfg_hr)},
 	{IWL_PCI_DEVICE(0xA0F0, 0x0000, iwl22000_2ax_cfg_hr)},
 
-#endif /* CONFIG_IWLMVM */
+#endif /* CPTCFG_IWLMVM */
 
 	{0}
 };
@@ -840,7 +840,7 @@ static int iwl_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (IS_ERR(iwl_trans))
 		return PTR_ERR(iwl_trans);
 
-#if IS_ENABLED(CONFIG_IWLMVM)
+#if IS_ENABLED(CPTCFG_IWLMVM)
 	/*
 	 * special-case 7265D, it has the same PCI IDs.
 	 *
@@ -1064,7 +1064,7 @@ err:
 	return ret;
 }
 
-#ifdef CONFIG_IWLWIFI_PCIE_RTPM
+#ifdef CPTCFG_IWLWIFI_PCIE_RTPM
 static int iwl_pci_runtime_suspend(struct device *device)
 {
 	struct pci_dev *pdev = to_pci_dev(device);
@@ -1140,18 +1140,18 @@ static void iwl_pci_system_complete(struct device *device)
 	 */
 	trans->suspending = false;
 }
-#endif /* CONFIG_IWLWIFI_PCIE_RTPM */
+#endif /* CPTCFG_IWLWIFI_PCIE_RTPM */
 
 static const struct dev_pm_ops iwl_dev_pm_ops = {
 	SET_SYSTEM_SLEEP_PM_OPS(iwl_pci_suspend,
 				iwl_pci_resume)
-#ifdef CONFIG_IWLWIFI_PCIE_RTPM
+#ifdef CPTCFG_IWLWIFI_PCIE_RTPM
 	SET_RUNTIME_PM_OPS(iwl_pci_runtime_suspend,
 			   iwl_pci_runtime_resume,
 			   NULL)
 	.prepare = iwl_pci_system_prepare,
 	.complete = iwl_pci_system_complete,
-#endif /* CONFIG_IWLWIFI_PCIE_RTPM */
+#endif /* CPTCFG_IWLWIFI_PCIE_RTPM */
 };
 
 #define IWL_PM_OPS	(&iwl_dev_pm_ops)

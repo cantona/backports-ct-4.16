@@ -264,7 +264,7 @@ il_generic_cmd_callback(struct il_priv *il, struct il_device_cmd *cmd,
 		       il_get_cmd_string(cmd->hdr.cmd), pkt->hdr.flags);
 		return;
 	}
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 	switch (cmd->hdr.cmd) {
 	case C_TX_LINK_QUALITY_CMD:
 	case C_SENSITIVITY:
@@ -1403,7 +1403,7 @@ EXPORT_SYMBOL(il_scan_cancel_timeout);
 static void
 il_hdl_scan(struct il_priv *il, struct il_rx_buf *rxb)
 {
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 	struct il_rx_pkt *pkt = rxb_addr(rxb);
 	struct il_scanreq_notification *notif =
 	    (struct il_scanreq_notification *)pkt->u.raw;
@@ -1430,7 +1430,7 @@ il_hdl_scan_start(struct il_priv *il, struct il_rx_buf *rxb)
 static void
 il_hdl_scan_results(struct il_priv *il, struct il_rx_buf *rxb)
 {
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 	struct il_rx_pkt *pkt = rxb_addr(rxb);
 	struct il_scanresults_notification *notif =
 	    (struct il_scanresults_notification *)pkt->u.raw;
@@ -1448,7 +1448,7 @@ static void
 il_hdl_scan_complete(struct il_priv *il, struct il_rx_buf *rxb)
 {
 
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 	struct il_rx_pkt *pkt = rxb_addr(rxb);
 	struct il_scancomplete_notification *scan_notif = (void *)pkt->u.raw;
 #endif
@@ -2355,7 +2355,7 @@ il_dealloc_bcast_stations(struct il_priv *il)
 }
 EXPORT_SYMBOL_GPL(il_dealloc_bcast_stations);
 
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 static void
 il_dump_lq_cmd(struct il_priv *il, struct il_link_quality_cmd *lq)
 {
@@ -3202,7 +3202,7 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
 	if (idx == TFD_CMD_SLOTS)
 		len = IL_MAX_CMD_SIZE;
 
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 	switch (out_cmd->hdr.cmd) {
 	case C_TX_LINK_QUALITY_CMD:
 	case C_SENSITIVITY:
@@ -3599,7 +3599,7 @@ il_is_ht40_tx_allowed(struct il_priv *il, struct ieee80211_sta_ht_cap *ht_cap)
 	if (ht_cap && !ht_cap->ht_supported)
 		return false;
 
-#ifdef CONFIG_IWLEGACY_DEBUGFS
+#ifdef CPTCFG_IWLEGACY_DEBUGFS
 	if (il->disable_ht40)
 		return false;
 #endif
@@ -4142,7 +4142,7 @@ il_hdl_csa(struct il_priv *il, struct il_rx_buf *rxb)
 }
 EXPORT_SYMBOL(il_hdl_csa);
 
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 void
 il_print_rx_config_cmd(struct il_priv *il)
 {
@@ -4179,7 +4179,7 @@ il_irq_handle_error(struct il_priv *il)
 	il->ops->dump_nic_error_log(il);
 	if (il->ops->dump_fh)
 		il->ops->dump_fh(il, NULL, false);
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 	if (il_get_debug_level(il) & IL_DL_FW_ERRORS)
 		il_print_rx_config_cmd(il);
 #endif
@@ -4463,7 +4463,7 @@ EXPORT_SYMBOL(il_send_stats_request);
 void
 il_hdl_pm_sleep(struct il_priv *il, struct il_rx_buf *rxb)
 {
-#ifdef CONFIG_IWLEGACY_DEBUG
+#ifdef CPTCFG_IWLEGACY_DEBUG
 	struct il_rx_pkt *pkt = rxb_addr(rxb);
 	struct il_sleep_notification *sleep = &(pkt->u.sleep_notif);
 	D_RX("sleep mode: %d, src: %d\n",

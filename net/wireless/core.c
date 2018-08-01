@@ -489,7 +489,7 @@ struct wiphy *wiphy_new_nm(const struct cfg80211_ops *ops, int sizeof_priv,
 		  cfg80211_propagate_radar_detect_wk);
 	INIT_WORK(&rdev->propagate_cac_done_wk, cfg80211_propagate_cac_done_wk);
 
-#ifdef CONFIG_CFG80211_DEFAULT_PS
+#ifdef CPTCFG_CFG80211_DEFAULT_PS
 	rdev->wiphy.flags |= WIPHY_FLAG_PS_ON_BY_DEFAULT;
 #endif
 
@@ -627,7 +627,7 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
 			}
 		}
 
-#ifndef CONFIG_WIRELESS_WDS
+#ifndef CPTCFG_WIRELESS_WDS
 		if (WARN_ON(all_iftypes & BIT(NL80211_IFTYPE_WDS)))
 			return -EINVAL;
 #endif
@@ -671,7 +671,7 @@ int wiphy_register(struct wiphy *wiphy)
 		     !(wiphy->nan_supported_bands & BIT(NL80211_BAND_2GHZ)))))
 		return -EINVAL;
 
-#ifndef CONFIG_WIRELESS_WDS
+#ifndef CPTCFG_WIRELESS_WDS
 	if (WARN_ON(wiphy->interface_modes & BIT(NL80211_IFTYPE_WDS)))
 		return -EINVAL;
 #endif
@@ -1074,7 +1074,7 @@ void __cfg80211_leave(struct cfg80211_registered_device *rdev,
 				cfg80211_stop_sched_scan_req(rdev, pos, false);
 		}
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 		kfree(wdev->wext.ie);
 		wdev->wext.ie = NULL;
 		wdev->wext.ie_len = 0;
@@ -1191,7 +1191,7 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
 			pr_err("failed to add phy80211 symlink to netdev!\n");
 		}
 		wdev->netdev = dev;
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 #ifdef CONFIG_WIRELESS_EXT
 		if (!dev->wireless_handlers)
 			dev->wireless_handlers = &cfg80211_wext_handler;
@@ -1246,7 +1246,7 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
 		cfg80211_update_iface_num(rdev, wdev->iftype, 1);
 		wdev_lock(wdev);
 		switch (wdev->iftype) {
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 		case NL80211_IFTYPE_ADHOC:
 			cfg80211_ibss_wext_join(rdev, wdev);
 			break;
@@ -1254,7 +1254,7 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
 			cfg80211_mgd_wext_connect(rdev, wdev);
 			break;
 #endif
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CPTCFG_MAC80211_MESH
 		case NL80211_IFTYPE_MESH_POINT:
 			{
 				/* backward compat code... */
@@ -1305,7 +1305,7 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
 			list_del_rcu(&wdev->list);
 			rdev->devlist_generation++;
 			cfg80211_mlme_purge_registrations(wdev);
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 			kzfree(wdev->wext.keys);
 #endif
 			flush_work(&wdev->disconnect_wk);

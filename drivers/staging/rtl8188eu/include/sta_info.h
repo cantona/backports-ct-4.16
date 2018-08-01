@@ -135,7 +135,7 @@ struct sta_info {
 	/* sta_info: (AP & STA) CAP/INFO */
 
 	struct list_head asoc_list;
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 	struct list_head auth_list;
 
 	unsigned int expire_to;
@@ -175,7 +175,7 @@ struct sta_info {
 
 	u8 has_legacy_ac;
 	unsigned int sleepq_ac_len;
-#endif	/*  CONFIG_88EU_AP_MODE */
+#endif	/*  CPTCFG_88EU_AP_MODE */
 
 	u8 under_exist_checking;
 	u8 keep_alive_trycnt;
@@ -303,7 +303,7 @@ struct	sta_priv {
 	spinlock_t asoc_list_lock;
 	struct list_head asoc_list;
 
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 	struct list_head auth_list;
 	spinlock_t auth_list_lock;
 	u8 asoc_list_cnt;

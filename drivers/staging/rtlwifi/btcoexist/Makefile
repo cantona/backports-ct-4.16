@@ -5,4 +5,4 @@ btcoexist-objs :=				\
 			halbtcoutsrc.o		\
 			rtl_btc.o
 
-obj-$(CONFIG_RTLBTCOEXIST) += btcoexist.o
+obj-$(CPTCFG_RTLBTCOEXIST) += btcoexist.o

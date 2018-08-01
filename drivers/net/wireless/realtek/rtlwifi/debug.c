@@ -28,7 +28,7 @@
 #include <linux/moduleparam.h>
 #include <linux/vmalloc.h>
 
-#ifdef CONFIG_RTLWIFI_DEBUG
+#ifdef CPTCFG_RTLWIFI_DEBUG
 void _rtl_dbg_trace(struct rtl_priv *rtlpriv, u64 comp, int level,
 		    const char *fmt, ...)
 {

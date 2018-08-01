@@ -716,7 +716,7 @@ struct ieee80211_if_mesh {
 	int mpp_paths_generation;
 };
 
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CPTCFG_MAC80211_MESH
 #define IEEE80211_IFSTA_MESH_CTR_INC(msh, name)	\
 	do { (msh)->mshstats.name++; } while (0)
 #else
@@ -976,7 +976,7 @@ struct ieee80211_sub_if_data {
 		struct ieee80211_if_nan nan;
 	} u;
 
-#ifdef CONFIG_MAC80211_DEBUGFS
+#ifdef CPTCFG_MAC80211_DEBUGFS
 	struct {
 		struct dentry *subdir_stations;
 		struct dentry *default_unicast_key;
@@ -1096,7 +1096,7 @@ enum queue_stop_reason {
 	IEEE80211_QUEUE_STOP_REASONS,
 };
 
-#ifdef CONFIG_MAC80211_LEDS
+#ifdef CPTCFG_MAC80211_LEDS
 struct tpt_led_trigger {
 	char name[32];
 	const struct ieee80211_tpt_blink *blink_table;
@@ -1328,7 +1328,7 @@ struct ieee80211_local {
 	struct list_head chanctx_list;
 	struct mutex chanctx_mtx;
 
-#ifdef CONFIG_MAC80211_LEDS
+#ifdef CPTCFG_MAC80211_LEDS
 	int tx_led_counter, rx_led_counter;
 	struct led_trigger tx_led, rx_led, assoc_led, radio_led;
 	struct led_trigger tpt_led;
@@ -1337,7 +1337,7 @@ struct ieee80211_local {
 	struct tpt_led_trigger *tpt_led_trigger;
 #endif
 
-#ifdef CONFIG_MAC80211_DEBUG_COUNTERS
+#ifdef CPTCFG_MAC80211_DEBUG_COUNTERS
 	/* SNMP counters */
 	/* dot11CountersTable */
 	u32 dot11TransmittedFragmentCount;
@@ -1366,9 +1366,9 @@ struct ieee80211_local {
 	unsigned int rx_handlers_fragments;
 	unsigned int tx_status_drop;
 #define I802_DEBUG_INC(c) (c)++
-#else /* CONFIG_MAC80211_DEBUG_COUNTERS */
+#else /* CPTCFG_MAC80211_DEBUG_COUNTERS */
 #define I802_DEBUG_INC(c) do { } while (0)
-#endif /* CONFIG_MAC80211_DEBUG_COUNTERS */
+#endif /* CPTCFG_MAC80211_DEBUG_COUNTERS */
 
 
 	int total_ps_buffered; /* total number of all buffered unicast and
@@ -1400,7 +1400,7 @@ struct ieee80211_local {
 
 	struct work_struct restart_work;
 
-#ifdef CONFIG_MAC80211_DEBUGFS
+#ifdef CPTCFG_MAC80211_DEBUGFS
 	struct local_debugfsdentries {
 		struct dentry *rcdir;
 		struct dentry *keys;
@@ -2216,7 +2216,7 @@ void ieee80211_tdls_chsw_work(struct work_struct *wk);
 
 extern const struct ethtool_ops ieee80211_ethtool_ops;
 
-#ifdef CONFIG_MAC80211_NOINLINE
+#ifdef CPTCFG_MAC80211_NOINLINE
 #define debug_noinline noinline
 #else
 #define debug_noinline

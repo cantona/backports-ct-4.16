@@ -257,11 +257,11 @@ int brcmf_bus_started(struct device *dev);
 s32 brcmf_iovar_data_set(struct device *dev, char *name, void *data, u32 len);
 void brcmf_bus_add_txhdrlen(struct device *dev, uint len);
 
-#ifdef CONFIG_BRCMFMAC_SDIO
+#ifdef CPTCFG_BRCMFMAC_SDIO
 void brcmf_sdio_exit(void);
 void brcmf_sdio_register(void);
 #endif
-#ifdef CONFIG_BRCMFMAC_USB
+#ifdef CPTCFG_BRCMFMAC_USB
 void brcmf_usb_exit(void);
 void brcmf_usb_register(void);
 #endif

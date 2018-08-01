@@ -1679,7 +1679,7 @@ s32 rtw_xmit(struct adapter *padapter, struct sk_buff **ppkt)
 
 	pxmitframe->attrib.qsel = pxmitframe->attrib.priority;
 
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CPTCFG_88EU_AP_MODE
 	spin_lock_bh(&pxmitpriv->lock);
 	if (xmitframe_enqueue_for_sleeping_sta(padapter, pxmitframe)) {
 		spin_unlock_bh(&pxmitpriv->lock);
@@ -1694,7 +1694,7 @@ s32 rtw_xmit(struct adapter *padapter, struct sk_buff **ppkt)
 	return 0;
 }
 
-#if defined(CONFIG_88EU_AP_MODE)
+#if defined(CPTCFG_88EU_AP_MODE)
 
 int xmitframe_enqueue_for_sleeping_sta(struct adapter *padapter, struct xmit_frame *pxmitframe)
 {

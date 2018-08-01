@@ -1635,7 +1635,7 @@ static void ath10k_htt_rx_h_mpdu(struct ath10k *ar,
 		   has_peer_idx_invalid, enctype);
 	*/
 	skb_queue_walk(amsdu, msdu) {
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CPTCFG_ATH10K_DEBUGFS
 		ar->debug.rx_bytes += msdu->len;
 #endif
 		ath10k_htt_rx_h_csum_offload(msdu);
@@ -1711,7 +1711,7 @@ static int ath10k_unchain_msdu(struct ath10k *ar, struct sk_buff_head *amsdu)
 		/* put it back together so we can free the
 		 * whole list at once.
 		 */
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CPTCFG_ATH10K_DEBUGFS
 		ar->debug.rx_drop_unchain_oom++;
 #endif
 		__skb_queue_head(amsdu, first);
@@ -1750,7 +1750,7 @@ static void ath10k_htt_rx_h_unchain(struct ath10k *ar,
 	 */
 	if (decap != RX_MSDU_DECAP_RAW ||
 	    skb_queue_len(amsdu) != 1 + rxd->frag_info.ring2_more_count) {
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CPTCFG_ATH10K_DEBUGFS
 		ar->debug.rx_drop_decap_non_raw_chained++;
 #endif
 		__skb_queue_purge(amsdu);
@@ -1770,7 +1770,7 @@ static bool ath10k_htt_rx_amsdu_allowed(struct ath10k *ar,
 
 	if (!rx_status->freq) {
 		ath10k_dbg(ar, ATH10K_DBG_HTT, "no channel configured; ignoring frame(s)!\n");
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CPTCFG_ATH10K_DEBUGFS
 		ar->debug.rx_drop_no_freq++;
 #endif
 		return false;
@@ -1778,7 +1778,7 @@ static bool ath10k_htt_rx_amsdu_allowed(struct ath10k *ar,
 
 	if (test_bit(ATH10K_CAC_RUNNING, &ar->dev_flags)) {
 		ath10k_dbg(ar, ATH10K_DBG_HTT, "htt rx cac running\n");
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CPTCFG_ATH10K_DEBUGFS
 		ar->debug.rx_drop_cac_running++;
 #endif
 		return false;

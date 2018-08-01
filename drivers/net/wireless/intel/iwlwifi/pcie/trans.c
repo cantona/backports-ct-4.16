@@ -2342,7 +2342,7 @@ void iwl_pcie_dump_csr(struct iwl_trans *trans)
 	}
 }
 
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CPTCFG_IWLWIFI_DEBUGFS
 /* create and remove of files */
 #define DEBUGFS_ADD_FILE(name, parent, mode) do {			\
 	if (!debugfs_create_file(#name, mode, parent, trans,		\
@@ -2489,7 +2489,7 @@ static ssize_t iwl_dbgfs_interrupt_read(struct file *file,
 			"\tLast Restarting Code:  0x%X\n",
 			isr_stats->err_code);
 	}
-#ifdef CONFIG_IWLWIFI_DEBUG
+#ifdef CPTCFG_IWLWIFI_DEBUG
 	pos += scnprintf(buf + pos, bufsz - pos, "Frame transmitted:\t\t %u\n",
 		isr_stats->sch);
 	pos += scnprintf(buf + pos, bufsz - pos, "Alive interrupt:\t\t %u\n",
@@ -2628,7 +2628,7 @@ err:
 	IWL_ERR(trans, "failed to create the trans debugfs entry\n");
 	return -ENOMEM;
 }
-#endif /*CONFIG_IWLWIFI_DEBUGFS */
+#endif /*CPTCFG_IWLWIFI_DEBUGFS */
 
 static u32 iwl_trans_pcie_get_cmdlen(struct iwl_trans *trans, void *tfd)
 {
@@ -3270,7 +3270,7 @@ struct iwl_trans *iwl_trans_pcie_alloc(struct pci_dev *pdev,
 		iwl_set_bit(trans, CSR_HOST_CHICKEN,
 			    CSR_HOST_CHICKEN_PM_IDLE_SRC_DIS_SB_PME);
 
-#if IS_ENABLED(CONFIG_IWLMVM)
+#if IS_ENABLED(CPTCFG_IWLMVM)
 	trans->hw_rf_id = iwl_read32(trans, CSR_HW_RF_ID);
 	if (trans->hw_rf_id == CSR_HW_RF_ID_TYPE_HR) {
 		u32 hw_status;
@@ -3317,11 +3317,11 @@ struct iwl_trans *iwl_trans_pcie_alloc(struct pci_dev *pdev,
 						   WQ_HIGHPRI | WQ_UNBOUND, 1);
 	INIT_WORK(&trans_pcie->rba.rx_alloc, iwl_pcie_rx_allocator_work);
 
-#ifdef CONFIG_IWLWIFI_PCIE_RTPM
+#ifdef CPTCFG_IWLWIFI_PCIE_RTPM
 	trans->runtime_pm_mode = IWL_PLAT_PM_MODE_D0I3;
 #else
 	trans->runtime_pm_mode = IWL_PLAT_PM_MODE_DISABLED;
-#endif /* CONFIG_IWLWIFI_PCIE_RTPM */
+#endif /* CPTCFG_IWLWIFI_PCIE_RTPM */
 
 	return trans;
 

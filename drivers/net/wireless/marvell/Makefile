@@ -1,6 +1,6 @@
-obj-$(CONFIG_LIBERTAS)		+= libertas/
+obj-$(CPTCFG_LIBERTAS)		+= libertas/
 
-obj-$(CONFIG_LIBERTAS_THINFIRM)	+= libertas_tf/
-obj-$(CONFIG_MWIFIEX)	+= mwifiex/
+obj-$(CPTCFG_LIBERTAS_THINFIRM)	+= libertas_tf/
+obj-$(CPTCFG_MWIFIEX)	+= mwifiex/
 
-obj-$(CONFIG_MWL8K)	+= mwl8k.o
+obj-$(CPTCFG_MWL8K)	+= mwl8k.o

@@ -5,9 +5,9 @@
 #
 
 ccflags-y += \
-	-Idrivers/net/wireless/quantenna/qtnfmac
+	-I$(backport_srctree)/drivers/net/wireless/quantenna/qtnfmac
 
-obj-$(CONFIG_QTNFMAC) += qtnfmac.o
+obj-$(CPTCFG_QTNFMAC) += qtnfmac.o
 qtnfmac-objs += \
 	core.o \
 	commands.o \
@@ -19,7 +19,7 @@ qtnfmac-objs += \
 
 #
 
-obj-$(CONFIG_QTNFMAC_PEARL_PCIE) += qtnfmac_pearl_pcie.o
+obj-$(CPTCFG_QTNFMAC_PEARL_PCIE) += qtnfmac_pearl_pcie.o
 
 qtnfmac_pearl_pcie-objs += \
 	shm_ipc.o \

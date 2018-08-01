@@ -52,13 +52,13 @@ void __brcmf_err(const char *func, const char *fmt, ...);
  */
 #define brcmf_err(fmt, ...)						\
 	do {								\
-		if (IS_ENABLED(CONFIG_BRCMDBG) ||			\
-		    IS_ENABLED(CONFIG_BRCM_TRACING) ||			\
+		if (IS_ENABLED(CPTCFG_BRCMDBG) ||			\
+		    IS_ENABLED(CPTCFG_BRCM_TRACING) ||			\
 		    net_ratelimit())					\
 			__brcmf_err(__func__, fmt, ##__VA_ARGS__);	\
 	} while (0)
 
-#if defined(DEBUG) || defined(CONFIG_BRCM_TRACING)
+#if defined(DEBUG) || defined(CPTCFG_BRCM_TRACING)
 
 /* For debug/tracing purposes treat info messages as errors */
 #define brcmf_info brcmf_err
@@ -80,7 +80,7 @@ do {								\
 #define BRCMF_FWCON_ON()	(brcmf_msg_level & BRCMF_FWCON_VAL)
 #define BRCMF_SCAN_ON()		(brcmf_msg_level & BRCMF_SCAN_VAL)
 
-#else /* defined(DEBUG) || defined(CONFIG_BRCM_TRACING) */
+#else /* defined(DEBUG) || defined(CPTCFG_BRCM_TRACING) */
 
 #define brcmf_info(fmt, ...)						\
 	do {								\
@@ -99,7 +99,7 @@ do {								\
 #define BRCMF_FWCON_ON()	0
 #define BRCMF_SCAN_ON()		0
 
-#endif /* defined(DEBUG) || defined(CONFIG_BRCM_TRACING) */
+#endif /* defined(DEBUG) || defined(CPTCFG_BRCM_TRACING) */
 
 #define brcmf_dbg_hex_dump(test, data, len, fmt, ...)			\
 do {									\

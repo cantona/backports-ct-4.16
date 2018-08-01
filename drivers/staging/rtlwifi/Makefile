@@ -1,4 +1,4 @@
-obj-$(CONFIG_R8822BE) 		+= r8822be.o
+obj-$(CPTCFG_R8822BE) 		+= r8822be.o
 
 r8822be-objs	:=		\
 		base.o		\
@@ -67,4 +67,4 @@ r8822be-objs	:=		\
 		phydm/rtl_phydm.o
 
 
-obj-$(CONFIG_R8822BE)			+= rtl8822be/
+obj-$(CPTCFG_R8822BE)			+= rtl8822be/

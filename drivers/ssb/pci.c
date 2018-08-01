@@ -947,7 +947,7 @@ out:
 	return err;
 }
 
-#ifdef CONFIG_SSB_DEBUG
+#ifdef CPTCFG_SSB_DEBUG
 static int ssb_pci_assert_buspower(struct ssb_bus *bus)
 {
 	if (likely(bus->powered_up))
@@ -1008,7 +1008,7 @@ static u32 ssb_pci_read32(struct ssb_device *dev, u16 offset)
 	return ioread32(bus->mmio + offset);
 }
 
-#ifdef CONFIG_SSB_BLOCKIO
+#ifdef CPTCFG_SSB_BLOCKIO
 static void ssb_pci_block_read(struct ssb_device *dev, void *buffer,
 			       size_t count, u16 offset, u8 reg_width)
 {
@@ -1041,7 +1041,7 @@ static void ssb_pci_block_read(struct ssb_device *dev, void *buffer,
 error:
 	memset(buffer, 0xFF, count);
 }
-#endif /* CONFIG_SSB_BLOCKIO */
+#endif /* CPTCFG_SSB_BLOCKIO */
 
 static void ssb_pci_write8(struct ssb_device *dev, u16 offset, u8 value)
 {
@@ -1082,7 +1082,7 @@ static void ssb_pci_write32(struct ssb_device *dev, u16 offset, u32 value)
 	iowrite32(value, bus->mmio + offset);
 }
 
-#ifdef CONFIG_SSB_BLOCKIO
+#ifdef CPTCFG_SSB_BLOCKIO
 static void ssb_pci_block_write(struct ssb_device *dev, const void *buffer,
 				size_t count, u16 offset, u8 reg_width)
 {
@@ -1111,7 +1111,7 @@ static void ssb_pci_block_write(struct ssb_device *dev, const void *buffer,
 		SSB_WARN_ON(1);
 	}
 }
-#endif /* CONFIG_SSB_BLOCKIO */
+#endif /* CPTCFG_SSB_BLOCKIO */
 
 /* Not "static", as it's used in main.c */
 const struct ssb_bus_ops ssb_pci_ops = {
@@ -1121,7 +1121,7 @@ const struct ssb_bus_ops ssb_pci_ops = {
 	.write8		= ssb_pci_write8,
 	.write16	= ssb_pci_write16,
 	.write32	= ssb_pci_write32,
-#ifdef CONFIG_SSB_BLOCKIO
+#ifdef CPTCFG_SSB_BLOCKIO
 	.block_read	= ssb_pci_block_read,
 	.block_write	= ssb_pci_block_write,
 #endif

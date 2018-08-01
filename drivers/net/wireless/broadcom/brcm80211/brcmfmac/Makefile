@@ -16,10 +16,10 @@
 # CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ccflags-y += \
-	-Idrivers/net/wireless/broadcom/brcm80211/brcmfmac	\
-	-Idrivers/net/wireless/broadcom/brcm80211/include
+	-I$(backport_srctree)/drivers/net/wireless/broadcom/brcm80211/brcmfmac	\
+	-I$(backport_srctree)/drivers/net/wireless/broadcom/brcm80211/include
 
-obj-$(CONFIG_BRCMFMAC) += brcmfmac.o
+obj-$(CPTCFG_BRCMFMAC) += brcmfmac.o
 brcmfmac-objs += \
 		cfg80211.o \
 		chip.o \
@@ -34,23 +34,23 @@ brcmfmac-objs += \
 		btcoex.o \
 		vendor.o \
 		pno.o
-brcmfmac-$(CONFIG_BRCMFMAC_PROTO_BCDC) += \
+brcmfmac-$(CPTCFG_BRCMFMAC_PROTO_BCDC) += \
 		bcdc.o \
 		fwsignal.o
-brcmfmac-$(CONFIG_BRCMFMAC_PROTO_MSGBUF) += \
+brcmfmac-$(CPTCFG_BRCMFMAC_PROTO_MSGBUF) += \
 		commonring.o \
 		flowring.o \
 		msgbuf.o
-brcmfmac-$(CONFIG_BRCMFMAC_SDIO) += \
+brcmfmac-$(CPTCFG_BRCMFMAC_SDIO) += \
 		sdio.o \
 		bcmsdh.o
-brcmfmac-$(CONFIG_BRCMFMAC_USB) += \
+brcmfmac-$(CPTCFG_BRCMFMAC_USB) += \
 		usb.o
-brcmfmac-$(CONFIG_BRCMFMAC_PCIE) += \
+brcmfmac-$(CPTCFG_BRCMFMAC_PCIE) += \
 		pcie.o
-brcmfmac-$(CONFIG_BRCMDBG) += \
+brcmfmac-$(CPTCFG_BRCMDBG) += \
 		debug.o
-brcmfmac-$(CONFIG_BRCM_TRACING) += \
+brcmfmac-$(CPTCFG_BRCM_TRACING) += \
 		tracepoint.o
 brcmfmac-$(CONFIG_OF) += \
 		of.o

@@ -693,7 +693,7 @@ static const struct ieee80211_iface_limit if_limits[] = {
 	}, {
 		.max = 8,
 		.types = BIT(NL80211_IFTYPE_STATION) |
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CPTCFG_MAC80211_MESH
 			 BIT(NL80211_IFTYPE_MESH_POINT) |
 #endif
 			 BIT(NL80211_IFTYPE_AP)

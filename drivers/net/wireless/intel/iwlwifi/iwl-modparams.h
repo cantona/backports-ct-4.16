@@ -132,7 +132,7 @@ struct iwl_mod_params {
 	int led_mode;
 	bool power_save;
 	int power_level;
-#ifdef CONFIG_IWLWIFI_DEBUG
+#ifdef CPTCFG_IWLWIFI_DEBUG
 	u32 debug_level;
 #endif
 	int antenna_coupling;

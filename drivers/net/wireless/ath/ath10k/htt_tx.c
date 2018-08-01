@@ -1128,7 +1128,7 @@ int ath10k_htt_mgmt_tx(struct ath10k_htt *htt, struct sk_buff *msdu)
 	if (res)
 		goto err_unmap_msdu;
 
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CPTCFG_ATH10K_DEBUGFS
 	ar->debug.tx_bytes += skb_len;
 #endif
 
@@ -1382,7 +1382,7 @@ static int ath10k_htt_tx_32(struct ath10k_htt *htt,
 	if (res)
 		goto err_unmap_msdu;
 
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CPTCFG_ATH10K_DEBUGFS
 	ar->debug.tx_bytes += skb_len;
 #endif
 

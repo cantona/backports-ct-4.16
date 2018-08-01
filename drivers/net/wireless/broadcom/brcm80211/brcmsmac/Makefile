@@ -16,9 +16,9 @@
 # CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ccflags-y := \
-	-Idrivers/net/wireless/broadcom/brcm80211/brcmsmac \
-	-Idrivers/net/wireless/broadcom/brcm80211/brcmsmac/phy \
-	-Idrivers/net/wireless/broadcom/brcm80211/include
+	-I$(backport_srctree)/drivers/net/wireless/broadcom/brcm80211/brcmsmac \
+	-I$(backport_srctree)/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy \
+	-I$(backport_srctree)/drivers/net/wireless/broadcom/brcm80211/include
 
 brcmsmac-y := \
 	mac80211_if.o \
@@ -42,6 +42,6 @@ brcmsmac-y := \
 	brcms_trace_events.o \
 	debug.o
 
-brcmsmac-$(CONFIG_BCMA_DRIVER_GPIO) += led.o
+brcmsmac-$(CPTCFG_BCMA_DRIVER_GPIO) += led.o
 
-obj-$(CONFIG_BRCMSMAC)	+= brcmsmac.o
+obj-$(CPTCFG_BRCMSMAC)	+= brcmsmac.o

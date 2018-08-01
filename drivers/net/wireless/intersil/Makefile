@@ -1,4 +1,4 @@
-obj-$(CONFIG_HOSTAP)		+= hostap/
-obj-$(CONFIG_HERMES)		+= orinoco/
-obj-$(CONFIG_P54_COMMON)	+= p54/
-obj-$(CONFIG_PRISM54)		+= prism54/
+obj-$(CPTCFG_HOSTAP)		+= hostap/
+obj-$(CPTCFG_HERMES)		+= orinoco/
+obj-$(CPTCFG_P54_COMMON)	+= p54/
+obj-$(CPTCFG_PRISM54)		+= prism54/

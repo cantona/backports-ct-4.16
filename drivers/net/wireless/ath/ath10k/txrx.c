@@ -181,7 +181,7 @@ int ath10k_txrx_tx_unref(struct ath10k_htt *htt,
 	trace_ath10k_txrx_tx_unref(ar, tx_done->msdu_id);
 
 	if (tx_done->status == HTT_TX_COMPL_STATE_DISCARD) {
-#ifdef CONFIG_ATH10K_DEBUG
+#ifdef CPTCFG_ATH10K_DEBUG
 		ar->debug.tx_discard++;
 		ar->debug.tx_discard_bytes += msdu->len;
 #endif
@@ -214,7 +214,7 @@ int ath10k_txrx_tx_unref(struct ath10k_htt *htt,
 			     ar->running_fw->fw_file.fw_features)) {
 			/* Deal with tx-completion status */
 			if ((tx_done->tx_rate_flags & 0x3) == ATH10K_RC_FLAG_XRETRY) {
-#ifdef CONFIG_ATH10K_DEBUG
+#ifdef CPTCFG_ATH10K_DEBUG
 				ar->debug.tx_noack++;
 				ar->debug.tx_noack_bytes += msdu->len;
 #endif
@@ -232,7 +232,7 @@ int ath10k_txrx_tx_unref(struct ath10k_htt *htt,
 	if (tx_failed) {
 		info->flags &= ~IEEE80211_TX_STAT_ACK;
 	}
-#ifdef CONFIG_ATH10K_DEBUG
+#ifdef CPTCFG_ATH10K_DEBUG
 	else {
 		ar->debug.tx_ok++;
 		ar->debug.tx_ok_bytes += msdu->len;

@@ -221,7 +221,7 @@ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
 	struct cfg80211_scan_request *request;
 	struct wireless_dev *wdev;
 	struct sk_buff *msg;
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 	union iwreq_data wrqu;
 #endif
 
@@ -257,7 +257,7 @@ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
 
 	msg = nl80211_build_scan_msg(rdev, wdev, request->info.aborted);
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 	if (wdev->netdev && !request->info.aborted) {
 		memset(&wrqu, 0, sizeof(wrqu));
 
@@ -1313,7 +1313,7 @@ void cfg80211_unlink_bss(struct wiphy *wiphy, struct cfg80211_bss *pub)
 }
 EXPORT_SYMBOL(cfg80211_unlink_bss);
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CPTCFG_CFG80211_WEXT
 static struct cfg80211_registered_device *
 cfg80211_get_dev_from_ifindex(struct net *net, int ifindex)
 {

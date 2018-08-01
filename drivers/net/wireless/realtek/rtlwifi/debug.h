@@ -165,7 +165,7 @@ enum dbgp_flag_e {
 	DBGP_TYPE_MAX
 };
 
-#ifdef CONFIG_RTLWIFI_DEBUG
+#ifdef CPTCFG_RTLWIFI_DEBUG
 
 struct rtl_priv;
 
@@ -220,7 +220,7 @@ static inline void RT_PRINT_DATA(struct rtl_priv *rtlpriv,
 
 #endif
 
-#ifdef CONFIG_RTLWIFI_DEBUG
+#ifdef CPTCFG_RTLWIFI_DEBUG
 void rtl_debug_add_one(struct ieee80211_hw *hw);
 void rtl_debug_remove_one(struct ieee80211_hw *hw);
 void rtl_debugfs_add_topdir(void);
