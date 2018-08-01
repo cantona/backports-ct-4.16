@@ -1,5 +1,6 @@
 config NFC_ST95HF
 	tristate "ST95HF NFC Transceiver driver"
+	depends on m
 	depends on SPI && NFC_DIGITAL
 	help
 	This enables the ST NFC driver for ST95HF NFC transceiver.

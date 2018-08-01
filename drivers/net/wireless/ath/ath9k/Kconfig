@@ -1,7 +1,9 @@
 config ATH9K_HW
 	tristate
+	depends on m
 config ATH9K_COMMON
 	tristate
+	depends on m
 	select ATH_COMMON
 config ATH9K_COMMON_DEBUG
 	bool
@@ -19,6 +21,7 @@ config ATH9K_BTCOEX_SUPPORT
 
 config ATH9K
 	tristate "Atheros 802.11n wireless cards support"
+	depends on m
 	depends on MAC80211 && HAS_DMA
 	select ATH9K_HW
 	select MAC80211_LEDS
@@ -158,6 +161,7 @@ config ATH9K_PCOEM
 
 config ATH9K_HTC
        tristate "Atheros HTC based wireless cards support"
+       depends on m
        depends on USB && MAC80211
        select ATH9K_HW
        select MAC80211_LEDS

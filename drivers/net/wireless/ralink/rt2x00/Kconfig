@@ -1,5 +1,6 @@
 menuconfig RT2X00
 	tristate "Ralink driver support"
+	depends on m
 	depends on MAC80211 && HAS_DMA
 	---help---
 	  This will enable the support for the Ralink drivers,
@@ -19,6 +20,7 @@ if RT2X00
 
 config RT2400PCI
 	tristate "Ralink rt2400 (PCI/PCMCIA) support"
+	depends on m
 	depends on PCI
 	select RT2X00_LIB_MMIO
 	select RT2X00_LIB_PCI
@@ -31,6 +33,7 @@ config RT2400PCI
 
 config RT2500PCI
 	tristate "Ralink rt2500 (PCI/PCMCIA) support"
+	depends on m
 	depends on PCI
 	select RT2X00_LIB_MMIO
 	select RT2X00_LIB_PCI
@@ -43,6 +46,7 @@ config RT2500PCI
 
 config RT61PCI
 	tristate "Ralink rt2501/rt61 (PCI/PCMCIA) support"
+	depends on m
 	depends on PCI
 	select RT2X00_LIB_PCI
 	select RT2X00_LIB_MMIO
@@ -58,6 +62,7 @@ config RT61PCI
 
 config RT2800PCI
 	tristate "Ralink rt27xx/rt28xx/rt30xx (PCI/PCIe/PCMCIA) support"
+	depends on m
 	depends on PCI
 	select RT2800_LIB
 	select RT2800_LIB_MMIO
@@ -112,6 +117,7 @@ endif
 
 config RT2500USB
 	tristate "Ralink rt2500 (USB) support"
+	depends on m
 	depends on USB
 	select RT2X00_LIB_USB
 	select RT2X00_LIB_CRYPTO
@@ -123,6 +129,7 @@ config RT2500USB
 
 config RT73USB
 	tristate "Ralink rt2501/rt73 (USB) support"
+	depends on m
 	depends on USB
 	select RT2X00_LIB_USB
 	select RT2X00_LIB_FIRMWARE
@@ -136,6 +143,7 @@ config RT73USB
 
 config RT2800USB
 	tristate "Ralink rt27xx/rt28xx/rt30xx (USB) support"
+	depends on m
 	depends on USB
 	select RT2800_LIB
 	select RT2X00_LIB_USB
@@ -201,6 +209,7 @@ endif
 
 config RT2800SOC
 	tristate "Ralink WiSoC support"
+	depends on m
 	depends on SOC_RT288X || SOC_RT305X || SOC_MT7620
 	select RT2X00_LIB_SOC
 	select RT2X00_LIB_MMIO
@@ -217,29 +226,36 @@ config RT2800SOC
 
 config RT2800_LIB
 	tristate
+	depends on m
 
 config RT2800_LIB_MMIO
 	tristate
+	depends on m
 	select RT2X00_LIB_MMIO
 	select RT2800_LIB
 
 config RT2X00_LIB_MMIO
 	tristate
+	depends on m
 
 config RT2X00_LIB_PCI
 	tristate
+	depends on m
 	select RT2X00_LIB
 
 config RT2X00_LIB_SOC
 	tristate
+	depends on m
 	select RT2X00_LIB
 
 config RT2X00_LIB_USB
 	tristate
+	depends on m
 	select RT2X00_LIB
 
 config RT2X00_LIB
 	tristate
+	depends on m
 
 config RT2X00_LIB_FIRMWARE
 	bool

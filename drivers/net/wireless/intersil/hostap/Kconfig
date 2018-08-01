@@ -1,5 +1,6 @@
 config HOSTAP
 	tristate "IEEE 802.11 for Host AP (Prism2/2.5/3 and WEP/TKIP/CCMP)"
+	depends on m
 	select WIRELESS_EXT
 	select WEXT_SPY
 	select WEXT_PRIV
@@ -59,6 +60,7 @@ config HOSTAP_FIRMWARE_NVRAM
 
 config HOSTAP_PLX
 	tristate "Host AP driver for Prism2/2.5/3 in PLX9052 PCI adaptors"
+	depends on m
 	depends on PCI && HOSTAP
 	---help---
 	Host AP driver's version for Prism2/2.5/3 PC Cards in PLX9052 based
@@ -73,6 +75,7 @@ config HOSTAP_PLX
 
 config HOSTAP_PCI
 	tristate "Host AP driver for Prism2.5 PCI adaptors"
+	depends on m
 	depends on PCI && HOSTAP
 	---help---
 	Host AP driver's version for Prism2.5 PCI adaptors.
@@ -86,6 +89,7 @@ config HOSTAP_PCI
 
 config HOSTAP_CS
 	tristate "Host AP driver for Prism2/2.5/3 PC Cards"
+	depends on m
 	depends on PCMCIA && HOSTAP
 	---help---
 	Host AP driver's version for Prism2/2.5/3 PC Cards.

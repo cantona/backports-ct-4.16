@@ -13,6 +13,7 @@ if WLAN_VENDOR_RSI
 
 config RSI_91X
 	tristate "Redpine Signals Inc 91x WLAN driver support"
+	depends on m
 	depends on MAC80211
 	---help---
 	  This option enabes support for RSI 1x1 devices.
@@ -28,6 +29,7 @@ config RSI_DEBUGFS
 
 config RSI_SDIO
 	tristate "Redpine Signals SDIO bus support"
+	depends on m
 	depends on MMC && RSI_91X
 	default m
 	---help---
@@ -36,6 +38,7 @@ config RSI_SDIO
 
 config RSI_USB
 	tristate "Redpine Signals USB bus support"
+	depends on m
 	depends on USB && RSI_91X
 	default m
 	---help---

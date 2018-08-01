@@ -1,11 +1,13 @@
 config QTNFMAC
 	tristate
+	depends on m
 	depends on QTNFMAC_PEARL_PCIE
 	default m if QTNFMAC_PEARL_PCIE=m
 	default y if QTNFMAC_PEARL_PCIE=y
 
 config QTNFMAC_PEARL_PCIE
 	tristate "Quantenna QSR10g PCIe support"
+	depends on m
 	default n
 	depends on HAS_DMA && PCI && CFG80211
 	select QTNFMAC

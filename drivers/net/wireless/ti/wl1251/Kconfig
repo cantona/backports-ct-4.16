@@ -1,5 +1,6 @@
 config WL1251
 	tristate "TI wl1251 driver support"
+	depends on m
 	depends on MAC80211
 	select FW_LOADER
 	select CRC7
@@ -12,6 +13,7 @@ config WL1251
 
 config WL1251_SPI
 	tristate "TI wl1251 SPI support"
+	depends on m
 	depends on WL1251 && SPI_MASTER
 	---help---
 	  This module adds support for the SPI interface of adapters using
@@ -23,6 +25,7 @@ config WL1251_SPI
 
 config WL1251_SDIO
 	tristate "TI wl1251 SDIO support"
+	depends on m
 	depends on WL1251 && MMC
 	---help---
 	  This module adds support for the SDIO interface of adapters using

@@ -1,5 +1,6 @@
 config HERMES
 	tristate "Hermes chipset 802.11b support (Orinoco/Prism2/Symbol)"
+	depends on m
 	depends on (PPC_PMAC || PCI || PCMCIA)
 	depends on CFG80211
 	select CFG80211_WEXT_EXPORT
@@ -56,6 +57,7 @@ config HERMES_CACHE_FW_ON_INIT
 
 config APPLE_AIRPORT
 	tristate "Apple Airport support (built-in)"
+	depends on m
 	depends on PPC_PMAC && HERMES
 	help
 	  Say Y here to support the Airport 802.11b wireless Ethernet hardware
@@ -68,6 +70,7 @@ config APPLE_AIRPORT
 
 config PLX_HERMES
 	tristate "Hermes in PLX9052 based PCI adaptor support (Netgear MA301 etc.)"
+	depends on m
 	depends on PCI && HERMES
 	help
 	  Enable support for PCMCIA cards supported by the "Hermes" (aka
@@ -79,6 +82,7 @@ config PLX_HERMES
 
 config TMD_HERMES
 	tristate "Hermes in TMD7160 based PCI adaptor support"
+	depends on m
 	depends on PCI && HERMES
 	help
 	  Enable support for PCMCIA cards supported by the "Hermes" (aka
@@ -89,6 +93,7 @@ config TMD_HERMES
 
 config NORTEL_HERMES
 	tristate "Nortel emobility PCI adaptor support"
+	depends on m
 	depends on PCI && HERMES
 	help
 	  Enable support for PCMCIA cards supported by the "Hermes" (aka
@@ -98,6 +103,7 @@ config NORTEL_HERMES
 
 config PCI_HERMES
 	tristate "Prism 2.5 PCI 802.11b adaptor support"
+	depends on m
 	depends on PCI && HERMES && HERMES_PRISM
 	help
 	  Enable support for PCI and mini-PCI 802.11b wireless NICs based on
@@ -108,6 +114,7 @@ config PCI_HERMES
 
 config PCMCIA_HERMES
 	tristate "Hermes PCMCIA card support"
+	depends on m
 	depends on PCMCIA && HERMES && HAS_IOPORT_MAP
 	---help---
 	  A driver for "Hermes" chipset based PCMCIA wireless adaptors, such
@@ -123,6 +130,7 @@ config PCMCIA_HERMES
 
 config PCMCIA_SPECTRUM
 	tristate "Symbol Spectrum24 Trilogy PCMCIA card support"
+	depends on m
 	depends on PCMCIA && HERMES && HAS_IOPORT_MAP
 	---help---
 
@@ -136,6 +144,7 @@ config PCMCIA_SPECTRUM
 
 config ORINOCO_USB
 	tristate "Agere Orinoco USB support"
+	depends on m
 	depends on USB && HERMES
 	select FW_LOADER
 	---help---

@@ -1,5 +1,6 @@
 config LIBERTAS_THINFIRM
 	tristate "Marvell 8xxx Libertas WLAN driver support with thin firmware"
+	depends on m
 	depends on MAC80211
 	select FW_LOADER
 	---help---
@@ -13,6 +14,7 @@ config LIBERTAS_THINFIRM_DEBUG
 
 config LIBERTAS_THINFIRM_USB
 	tristate "Marvell Libertas 8388 USB 802.11b/g cards with thin firmware"
+	depends on m
 	depends on LIBERTAS_THINFIRM && USB
 	---help---
 	  A driver for Marvell Libertas 8388 USB devices using thinfirm.

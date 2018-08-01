@@ -1,8 +1,10 @@
 config MT76_CORE
 	tristate
+	depends on m
 
 config MT76x2E
 	tristate "MediaTek MT76x2E (PCIe) support"
+	depends on m
 	select MT76_CORE
 	depends on MAC80211
 	depends on PCI

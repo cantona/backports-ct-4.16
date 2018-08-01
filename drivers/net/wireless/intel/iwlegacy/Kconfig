@@ -1,5 +1,6 @@
 config IWLEGACY
 	tristate
+	depends on m
 	select FW_LOADER
 	select NEW_LEDS
 	select LEDS_CLASS
@@ -8,6 +9,7 @@ config IWLEGACY
 
 config IWL4965
 	tristate "Intel Wireless WiFi 4965AGN (iwl4965)"
+	depends on m
 	depends on PCI && MAC80211
 	select IWLEGACY
 	---help---
@@ -36,6 +38,7 @@ config IWL4965
 
 config IWL3945
 	tristate "Intel PRO/Wireless 3945ABG/BG Network Connection (iwl3945)"
+	depends on m
 	depends on PCI && MAC80211
 	select IWLEGACY
 	---help---

@@ -1,5 +1,6 @@
 config NFC_MICROREAD
 	tristate
+	depends on m
 	select CRC_CCITT
 	---help---
 	  This module contains the main code for Inside Secure microread
@@ -8,6 +9,7 @@ config NFC_MICROREAD
 
 config NFC_MICROREAD_I2C
 	tristate "Inside Secure Microread device support (I2C)"
+	depends on m
 	depends on NFC_HCI && I2C && NFC_SHDLC
 	select NFC_MICROREAD
 	---help---
@@ -20,6 +22,7 @@ config NFC_MICROREAD_I2C
 
 config NFC_MICROREAD_MEI
 	tristate "Inside Secure Microread device support (MEI)"
+	depends on m
 	depends on NFC_HCI && NFC_MEI_PHY
 	select NFC_MICROREAD
 	---help---

@@ -64,6 +64,7 @@ config BP_MODULES
 
 config BPAUTO_BUILD_CORDIC
 	tristate
+	depends on m
 	depends on !CORDIC
 	depends on KERNEL_3_1
 	default m if BPAUTO_CORDIC
@@ -104,6 +105,7 @@ config BPAUTO_USERSEL_BUILD_ALL
 
 config BPAUTO_CRYPTO_SKCIPHER
 	tristate
+	depends on m
 	depends on KERNEL_4_3
 	default y if BACKPORTED_LIB80211_CRYPT_WEP
 	default y if BACKPORTED_LIB80211_CRYPT_TKIP

@@ -1,5 +1,6 @@
 config NFC_FDP
 	tristate "Intel FDP NFC driver"
+	depends on m
 	depends on NFC_NCI
 	select CRC_CCITT
 	default n
@@ -13,6 +14,7 @@ config NFC_FDP
 
 config NFC_FDP_I2C
 	tristate "NFC FDP i2c support"
+	depends on m
 	depends on NFC_FDP && I2C
 	---help---
 	  This module adds support for the Intel Fields Peak NFC controller

@@ -1,5 +1,6 @@
 config R8822BE
 	tristate "Realtek RTL8822BE Wireless Network Adapter"
+	depends on m
 	depends on PCI && MAC80211 && m
 	select FW_LOADER
 	---help---

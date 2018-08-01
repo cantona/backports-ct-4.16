@@ -1,5 +1,6 @@
 config NFC_NXP_NCI
 	tristate "NXP-NCI NFC driver"
+	depends on m
 	depends on NFC_NCI
 	default n
 	---help---
@@ -14,6 +15,7 @@ config NFC_NXP_NCI
 
 config NFC_NXP_NCI_I2C
 	tristate "NXP-NCI I2C support"
+	depends on m
 	depends on NFC_NXP_NCI && I2C
 	---help---
 	  This module adds support for an I2C interface to the NXP NCI
