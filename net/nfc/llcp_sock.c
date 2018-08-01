@@ -443,7 +443,11 @@ struct sock *nfc_llcp_accept_dequeue(struct sock *parent,
 }
 
 static int llcp_sock_accept(struct socket *sock, struct socket *newsock,
+#if LINUX_VERSION_IS_GEQ(4,11,0)
 			    int flags, bool kern)
+#else
+			    int flags)
+#endif
 {
 	DECLARE_WAITQUEUE(wait, current);
 	struct sock *sk = sock->sk, *new_sk;
