@@ -55,7 +55,7 @@ MODULE_PARM_DESC(max_pending_qsize,
 
 static inline void ieee80211_tx_stats(struct net_device *dev, u32 len)
 {
-	struct pcpu_sw_netstats *tstats = this_cpu_ptr(dev->tstats);
+	struct pcpu_sw_netstats *tstats = this_cpu_ptr(netdev_tstats(dev));
 
 	u64_stats_update_begin(&tstats->syncp);
 	tstats->tx_packets++;
