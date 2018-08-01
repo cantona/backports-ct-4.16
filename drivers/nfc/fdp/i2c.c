@@ -354,6 +354,12 @@ static int fdp_nci_i2c_probe(struct i2c_client *client)
 	dev_dbg(dev, "I2C driver loaded\n");
 	return 0;
 }
+#if LINUX_VERSION_IS_LESS(4,10,0)
+static int bp_fdp_nci_i2c_probe(struct i2c_client *client,
+				const struct i2c_device_id *id){
+	return fdp_nci_i2c_probe(client);
+}
+#endif
 
 static int fdp_nci_i2c_remove(struct i2c_client *client)
 {
@@ -378,7 +384,11 @@ static struct i2c_driver fdp_nci_i2c_driver = {
 		   .name = FDP_I2C_DRIVER_NAME,
 		   .acpi_match_table = ACPI_PTR(fdp_nci_i2c_acpi_match),
 		  },
+#if LINUX_VERSION_IS_GEQ(4,10,0)
 	.probe_new = fdp_nci_i2c_probe,
+#else
+	.probe = bp_fdp_nci_i2c_probe,
+#endif
 	.remove = fdp_nci_i2c_remove,
 };
 module_i2c_driver(fdp_nci_i2c_driver);
