@@ -2,7 +2,7 @@ config NFC_FDP
 	tristate "Intel FDP NFC driver"
 	depends on m
 	depends on NFC_NCI
-	select CRC_CCITT
+	depends on CRC_CCITT
 	default n
 	---help---
 	  Intel Fields Peak NFC controller core driver.

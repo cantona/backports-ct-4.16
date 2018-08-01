@@ -2,7 +2,7 @@ config CFG80211
 	tristate "cfg80211 - wireless configuration API"
 	depends on m
 	depends on RFKILL || !RFKILL
-	select FW_LOADER
+	depends on FW_LOADER
 	# may need to update this when certificates are changed and are
 	# using a different algorithm, though right now they shouldn't
 	# (this is here rather than below to allow it to be a module)
@@ -73,7 +73,7 @@ config CFG80211_CERTIFICATION_ONUS
 config CFG80211_REQUIRE_SIGNED_REGDB
 	bool "require regdb signature" if CFG80211_CERTIFICATION_ONUS
 	default y
-	select SYSTEM_DATA_VERIFICATION
+	select BPAUTO_SYSTEM_DATA_VERIFICATION
 	help
 	  Require that in addition to the "regulatory.db" file a
 	  "regulatory.db.p7s" can be loaded with a valid PKCS#7

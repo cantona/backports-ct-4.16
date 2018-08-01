@@ -1,7 +1,7 @@
 config NFC_MICROREAD
 	tristate
 	depends on m
-	select CRC_CCITT
+	depends on CRC_CCITT
 	---help---
 	  This module contains the main code for Inside Secure microread
 	  NFC chipsets. It implements the chipset HCI logic and hooks into

@@ -25,8 +25,8 @@ config ATH9K
 	depends on MAC80211 && HAS_DMA
 	select ATH9K_HW
 	select MAC80211_LEDS
-	select LEDS_CLASS
-	select NEW_LEDS
+	select BPAUTO_LEDS_CLASS
+	select BPAUTO_NEW_LEDS
 	select ATH9K_COMMON
 	---help---
 	  This module adds support for wireless adapters based on
@@ -165,8 +165,8 @@ config ATH9K_HTC
        depends on USB && MAC80211
        select ATH9K_HW
        select MAC80211_LEDS
-       select LEDS_CLASS
-       select NEW_LEDS
+       select BPAUTO_LEDS_CLASS
+       select BPAUTO_NEW_LEDS
        select ATH9K_COMMON
        ---help---
 	 Support for Atheros HTC based cards.
@@ -198,7 +198,7 @@ config ATH9K_HWRNG
 config ATH9K_COMMON_SPECTRAL
 	bool "Atheros ath9k/ath9k_htc spectral scan support"
 	depends on ATH9K_DEBUGFS || ATH9K_HTC_DEBUGFS
-	select RELAY
+	depends on RELAY
 	default n
 	---help---
 	  Say Y to enable access to the FFT/spectral data via debugfs.

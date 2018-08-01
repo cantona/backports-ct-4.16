@@ -15,10 +15,10 @@ config AIRO
 	tristate "Cisco/Aironet 34X/35X/4500/4800 ISA and PCI cards"
 	depends on m
 	depends on CFG80211 && ISA_DMA_API && (PCI || BROKEN)
-	select WIRELESS_EXT
-	select CRYPTO
-	select WEXT_SPY
-	select WEXT_PRIV
+	depends on WIRELESS_EXT
+	depends on CRYPTO
+	depends on WEXT_SPY
+	depends on WEXT_PRIV
 	---help---
 	  This is the standard Linux driver to support Cisco/Aironet ISA and
 	  PCI 802.11 wireless cards.
@@ -36,11 +36,11 @@ config AIRO_CS
 	tristate "Cisco/Aironet 34X/35X/4500/4800 PCMCIA cards"
 	depends on m
 	depends on CFG80211 && PCMCIA && (BROKEN || !M32R)
-	select WIRELESS_EXT
-	select WEXT_SPY
-	select WEXT_PRIV
-	select CRYPTO
-	select CRYPTO_AES
+	depends on WIRELESS_EXT
+	depends on WEXT_SPY
+	depends on WEXT_PRIV
+	depends on CRYPTO
+	depends on CRYPTO_AES
 	---help---
 	  This is the standard Linux driver to support Cisco/Aironet PCMCIA
 	  802.11 wireless cards.  This driver is the same as the Aironet

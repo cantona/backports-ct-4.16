@@ -1,7 +1,7 @@
 config NFC_ST21NFCA
 	tristate
 	depends on m
-	select CRC_CCITT
+	depends on CRC_CCITT
 	---help---
 	  STMicroelectronics ST21NFCA core driver. It implements the chipset
 	  HCI logic and hooks into the NFC kernel APIs. Physical layers will

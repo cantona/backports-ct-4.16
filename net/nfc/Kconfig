@@ -17,8 +17,8 @@ menuconfig NFC
 
 config NFC_DIGITAL
 	depends on NFC
-	select CRC_CCITT
-	select CRC_ITU_T
+	depends on CRC_CCITT
+	depends on CRC_ITU_T
 	tristate "NFC Digital Protocol stack support"
 	depends on m
 	default n
