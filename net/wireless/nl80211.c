@@ -8094,7 +8094,9 @@ static int nl80211_dump_scan(struct sk_buff *skb, struct netlink_callback *cb)
 	spin_lock_bh(&rdev->bss_lock);
 	cfg80211_bss_expire(rdev);
 
+#if LINUX_VERSION_IS_GEQ(3,1,0)
 	cb->seq = rdev->bss_generation;
+#endif
 
 	list_for_each_entry(scan, &rdev->bss_list, list) {
 		if (++idx <= start)
