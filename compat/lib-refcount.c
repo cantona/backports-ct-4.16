@@ -37,6 +37,7 @@
 
 #include <linux/refcount.h>
 #include <linux/bug.h>
+#include <linux/export.h>
 
 #ifdef CONFIG_REFCOUNT_FULL
 
