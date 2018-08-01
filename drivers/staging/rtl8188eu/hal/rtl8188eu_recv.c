@@ -13,7 +13,7 @@
  *
  ******************************************************************************/
 #define _RTL8188EU_RECV_C_
-#include <linux/kmemleak.h>
+#include <linux/slab.h>
 #include <osdep_service.h>
 #include <drv_types.h>
 #include <recv_osdep.h>
