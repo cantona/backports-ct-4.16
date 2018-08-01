@@ -114,7 +114,7 @@ static void extack_netlink_ack(struct sk_buff *in_skb, struct nlmsghdr *nlh,
 		return;
 	}
 
-	rep = __nlmsg_put(skb, NETLINK_CB(in_skb).portid, nlh->nlmsg_seq,
+	rep = __nlmsg_put(skb, NETLINK_CB_PORTID(in_skb), nlh->nlmsg_seq,
 			  NLMSG_ERROR, payload, flags);
 	errmsg = nlmsg_data(rep);
 	errmsg->error = err;
@@ -143,7 +143,8 @@ static void extack_netlink_ack(struct sk_buff *in_skb, struct nlmsghdr *nlh,
 
 	nlmsg_end(skb, rep);
 
-	netlink_unicast(in_skb->sk, skb, NETLINK_CB(in_skb).portid, MSG_DONTWAIT);
+	netlink_unicast(in_skb->sk, skb, NETLINK_CB_PORTID(in_skb),
+			MSG_DONTWAIT);
 }
 
 static int extack_doit(struct sk_buff *skb, struct genl_info *info)
