@@ -152,6 +152,17 @@ static void qtnf_netdev_get_stats64(struct net_device *ndev,
 		stats->tx_bytes += tx_bytes;
 	}
 }
+#if LINUX_VERSION_IS_LESS(4,11,0)
+/* Just declare it here to keep sparse happy */
+struct rtnl_link_stats64 *bp_qtnf_netdev_get_stats64(struct net_device *dev,
+						     struct rtnl_link_stats64 *stats);
+struct rtnl_link_stats64 *
+bp_qtnf_netdev_get_stats64(struct net_device *dev,
+			   struct rtnl_link_stats64 *stats){
+	qtnf_netdev_get_stats64(dev, stats);
+	return stats;
+}
+#endif
 
 /* Netdev handler for transmission timeout.
  */
@@ -185,7 +196,11 @@ const struct net_device_ops qtnf_netdev_ops = {
 	.ndo_stop = qtnf_netdev_close,
 	.ndo_start_xmit = qtnf_netdev_hard_start_xmit,
 	.ndo_tx_timeout = qtnf_netdev_tx_timeout,
+#if LINUX_VERSION_IS_GEQ(4,11,0)
 	.ndo_get_stats64 = qtnf_netdev_get_stats64,
+#else
+	.ndo_get_stats64 = bp_qtnf_netdev_get_stats64,
+#endif
 };
 
 static int qtnf_mac_init_single_band(struct wiphy *wiphy,

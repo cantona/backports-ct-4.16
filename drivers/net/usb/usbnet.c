@@ -1015,6 +1015,16 @@ void usbnet_get_stats64(struct net_device *net, struct rtnl_link_stats64 *stats)
 		stats->tx_bytes += tx_bytes;
 	}
 }
+#if LINUX_VERSION_IS_LESS(4,11,0)
+/* Just declare it here to keep sparse happy */
+struct rtnl_link_stats64 *bp_usbnet_get_stats64(struct net_device *dev,
+						struct rtnl_link_stats64 *stats);
+struct rtnl_link_stats64 *
+bp_usbnet_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats){
+	usbnet_get_stats64(dev, stats);
+	return stats;
+}
+#endif
 EXPORT_SYMBOL_GPL(usbnet_get_stats64);
 #if LINUX_VERSION_IS_LESS(4,11,0)
 EXPORT_SYMBOL_GPL(bp_usbnet_get_stats64);
@@ -1658,7 +1668,11 @@ static const struct net_device_ops usbnet_netdev_ops = {
 	.ndo_tx_timeout		= usbnet_tx_timeout,
 	.ndo_set_rx_mode	= usbnet_set_rx_mode,
 	.ndo_change_mtu		= usbnet_change_mtu,
+#if LINUX_VERSION_IS_GEQ(4,11,0)
 	.ndo_get_stats64	= usbnet_get_stats64,
+#else
+	.ndo_get_stats64 = bp_usbnet_get_stats64,
+#endif
 	.ndo_set_mac_address 	= eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
 };

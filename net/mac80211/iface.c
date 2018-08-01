@@ -1216,6 +1216,17 @@ ieee80211_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
 		stats->tx_bytes   += tx_bytes;
 	}
 }
+#if LINUX_VERSION_IS_LESS(4,11,0)
+/* Just declare it here to keep sparse happy */
+struct rtnl_link_stats64 *bp_ieee80211_get_stats64(struct net_device *dev,
+						   struct rtnl_link_stats64 *stats);
+struct rtnl_link_stats64 *
+bp_ieee80211_get_stats64(struct net_device *dev,
+			 struct rtnl_link_stats64 *stats){
+	ieee80211_get_stats64(dev, stats);
+	return stats;
+}
+#endif
 
 #if LINUX_VERSION_IS_LESS(4,10,0)
 static int __change_mtu(struct net_device *ndev, int new_mtu){
@@ -1237,7 +1248,11 @@ static const struct net_device_ops ieee80211_dataif_ops = {
 	.ndo_set_rx_mode	= ieee80211_set_multicast_list,
 	.ndo_set_mac_address 	= ieee80211_change_mac,
 	.ndo_select_queue	= ieee80211_netdev_select_queue,
+#if LINUX_VERSION_IS_GEQ(4,11,0)
 	.ndo_get_stats64	= ieee80211_get_stats64,
+#else
+	.ndo_get_stats64 = bp_ieee80211_get_stats64,
+#endif
 };
 
 #if LINUX_VERSION_IS_GEQ(3,14,0) || \
@@ -1283,7 +1298,11 @@ static const struct net_device_ops ieee80211_monitorif_ops = {
 	.ndo_set_rx_mode	= ieee80211_set_multicast_list,
 	.ndo_set_mac_address 	= ieee80211_change_mac,
 	.ndo_select_queue	= ieee80211_monitor_select_queue,
+#if LINUX_VERSION_IS_GEQ(4,11,0)
 	.ndo_get_stats64	= ieee80211_get_stats64,
+#else
+	.ndo_get_stats64 = bp_ieee80211_get_stats64,
+#endif
 };
 
 static void ieee80211_if_free(struct net_device *dev)
