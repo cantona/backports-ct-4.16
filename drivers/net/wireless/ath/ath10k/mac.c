@@ -101,7 +101,7 @@ static struct ieee80211_rate ath10k_rates_rev2[] = {
 #define ath10k_g_rates_rev2 (ath10k_rates_rev2 + 0)
 #define ath10k_g_rates_rev2_size (ARRAY_SIZE(ath10k_rates_rev2))
 
-static bool ath10k_mac_bitrate_is_cck(int bitrate)
+bool ath10k_mac_bitrate_is_cck(int bitrate)
 {
 	switch (bitrate) {
 	case 10:
@@ -214,6 +214,10 @@ int ath10k_mac_ext_resource_config(struct ath10k *ar, u32 val)
 int ath10k_modparam_nohwcrypt;
 module_param_named(nohwcrypt, ath10k_modparam_nohwcrypt, int, 0444);
 MODULE_PARM_DESC(nohwcrypt, "Disable hardware rx decrypt feature");
+
+int ath10k_modparam_ct_sta;
+module_param_named(ct_sta, ath10k_modparam_ct_sta, int, 0444);
+MODULE_PARM_DESC(ct_sta, "Use CT-STA mode, a bit like proxy-STA");
 
 int ath10k_modparam_nobeamform_mu;
 module_param_named(nobeamform_mu, ath10k_modparam_nobeamform_mu, int, 0444);
@@ -4950,6 +4954,12 @@ static void ath10k_mac_op_tx(struct ieee80211_hw *hw,
 		  txpath == ATH10K_MAC_TX_HTT_MGMT);
 	is_mgmt = (txpath == ATH10K_MAC_TX_HTT_MGMT);
 
+	if (ar->eeprom_overrides.tx_debug & 0x1) {
+		ath10k_warn(ar, "op-tx, vif: %pM  type: %d txmode: %d  is_htt: %d  is_mgt: %d\n",
+			    vif->addr, vif->type, txmode, is_htt, is_mgmt);
+	}
+
+
 	if (is_htt) {
 		spin_lock_bh(&ar->htt.tx_lock);
 		is_presp = ieee80211_is_probe_resp(hdr->frame_control);
@@ -8098,6 +8108,49 @@ static void ath10k_sta_rc_update(struct ieee80211_hw *hw,
 	ieee80211_queue_work(hw, &arsta->update_wk);
 }
 
+
+static u64 ath10k_get_tsf(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
+{
+	u64 rv = 0;
+
+#ifdef CPTCFG_ATH10K_DEBUGFS
+	struct ath10k *ar = hw->priv;
+	struct ath10k_vif *arvif = ath10k_vif_to_arvif(vif);
+	const struct ath10k_fw_stats_vdev *vdev;
+	int ret;
+
+	mutex_lock(&ar->conf_mutex);
+
+	/* Only CT firmware has the feature to get tsf, and even then only
+	 * recent 10.1 fw.  This check will at least keep us from bothering stock
+	 * fw for something it cannot provide.  (Aug 21, 2018). --Ben
+	 */
+	if (!test_bit(ATH10K_FW_FEATURE_CT_RATEMASK,
+		     ar->running_fw->fw_file.fw_features))
+		goto unlock;
+
+	if (ar->state != ATH10K_STATE_ON) {
+		goto unlock;
+	}
+
+	ret = ath10k_debug_fw_stats_request(ar);
+	if (ret)
+		goto unlock;
+
+	list_for_each_entry(vdev, &ar->debug.fw_stats.vdevs, list) {
+		if (vdev->vdev_id == arvif->vdev_id) {
+			rv = vdev->tsf64;
+			break;
+		}
+	}
+
+unlock:
+	mutex_unlock(&ar->conf_mutex);
+#endif
+
+	return rv;
+}
+
 static void ath10k_offset_tsf(struct ieee80211_hw *hw,
 			      struct ieee80211_vif *vif, s64 tsf_offset)
 {
@@ -8644,6 +8697,7 @@ static const struct ieee80211_ops ath10k_ops = {
 	.set_bitrate_mask		= ath10k_mac_op_set_bitrate_mask,
 	.sta_rc_update			= ath10k_sta_rc_update,
 	.offset_tsf			= ath10k_offset_tsf,
+	.get_tsf			= ath10k_get_tsf,
 	.ampdu_action			= ath10k_ampdu_action,
 	.get_et_sset_count		= ath10k_debug_get_et_sset_count,
 	.get_et_stats			= ath10k_debug_get_et_stats,
@@ -9497,9 +9551,12 @@ int ath10k_mac_register(struct ath10k *ar)
 			ar->hw->wiphy->interface_modes |= BIT(NL80211_IFTYPE_ADHOC);
 
 			/* CT firmware can do tx-sw-crypt if properly configured */
-			if (test_bit(ATH10K_FW_FEATURE_CT_RXSWCRYPT,
-				     ar->running_fw->fw_file.fw_features) &&
-			    ath10k_modparam_nohwcrypt)
+			if ((!(test_bit(ATH10K_FW_FEATURE_CT_STA,
+					ar->running_fw->fw_file.fw_features) &&
+			       ar->request_ct_sta)) &&
+			    (test_bit(ATH10K_FW_FEATURE_CT_RXSWCRYPT,
+				      ar->running_fw->fw_file.fw_features) &&
+			     ar->request_nohwcrypt))
 				__clear_bit(IEEE80211_HW_SW_CRYPTO_CONTROL, ar->hw->flags);
 		} else {
 			ret = ath10k_copy_comb(ar, ath10k_10_4_if_comb,

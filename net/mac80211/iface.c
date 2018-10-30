@@ -356,6 +356,9 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
 	mutex_lock(&local->chanctx_mtx);
 	ret = ieee80211_check_combinations(sdata, NULL, 0, 0);
 	mutex_unlock(&local->chanctx_mtx);
+	if (ret)
+		sdata_info(sdata, "check-concurrent-iface:  check-combinations failed: %d\n", ret);
+
 	return ret;
 }
 
@@ -1058,6 +1061,8 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata,
 
 	if (local->open_count == 0)
 		ieee80211_clear_tx_pending(local);
+
+	sdata->vif.bss_conf.beacon_int = 0;
 
 	/*
 	 * If the interface goes down while suspended, presumably because

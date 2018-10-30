@@ -734,6 +734,28 @@ struct amsdu_subframe_hdr {
 
 #define GROUP_ID_IS_SU_MIMO(x) ((x) == 0 || (x) == 63)
 
+static inline u8 ath10k_bw_to_mac80211_bw(u8 bw)
+{
+	u8 ret = 0;
+
+	switch (bw) {
+	case 0:
+		ret = RATE_INFO_BW_20;
+		break;
+	case 1:
+		ret = RATE_INFO_BW_40;
+		break;
+	case 2:
+		ret = RATE_INFO_BW_80;
+		break;
+	case 3:
+		ret = RATE_INFO_BW_160;
+		break;
+	}
+
+	return ret;
+}
+
 static void ath10k_htt_rx_h_rates(struct ath10k *ar,
 				  struct ieee80211_rx_status *status,
 				  struct htt_rx_desc *rxd)
@@ -836,23 +858,7 @@ static void ath10k_htt_rx_h_rates(struct ath10k *ar,
 		if (sgi)
 			status->enc_flags |= RX_ENC_FLAG_SHORT_GI;
 
-		switch (bw) {
-		/* 20MHZ */
-		case 0:
-			break;
-		/* 40MHZ */
-		case 1:
-			status->bw = RATE_INFO_BW_40;
-			break;
-		/* 80MHZ */
-		case 2:
-			status->bw = RATE_INFO_BW_80;
-			break;
-		case 3:
-			status->bw = RATE_INFO_BW_160;
-			break;
-		}
-
+		status->bw = ath10k_bw_to_mac80211_bw(bw);
 		status->encoding = RX_ENC_VHT;
 		break;
 	default:
@@ -1868,7 +1874,7 @@ static void ath10k_htt_rx_tx_compl_ind(struct ath10k *ar,
 {
 	struct ath10k_htt *htt = &ar->htt;
 	struct htt_resp *resp = (struct htt_resp *)skb->data;
-	struct htt_tx_done tx_done = {};
+	struct htt_tx_done tx_done = {0};
 	int status = MS(resp->data_tx_completion.flags, HTT_DATA_TX_STATUS);
 	__le16 msdu_id;
 	int i;
@@ -1902,10 +1908,33 @@ static void ath10k_htt_rx_tx_compl_ind(struct ath10k *ar,
 	    ar->running_fw->fw_file.wmi_op_version != ATH10K_FW_WMI_OP_VERSION_10_4) {
 		/* CT firmware reports tx-rate-kbps as well as the msdu id */
 		for (i = 0; i < resp->data_tx_completion_ct.num_msdus; i++) {
-			msdu_id = resp->data_tx_completion_ct.msdus[i].id;
-			tx_done.msdu_id = __le16_to_cpu(msdu_id);
-			tx_done.tx_rate_code = resp->data_tx_completion_ct.msdus[i].tx_rate_code;
-			tx_done.tx_rate_flags = resp->data_tx_completion_ct.msdus[i].tx_rate_flags;
+			if (likely(test_bit(ATH10K_FW_FEATURE_TXRATE2_CT,
+					    ar->running_fw->fw_file.fw_features))) {
+				msdu_id = resp->data_tx_completion_ct2.msdus[i].id;
+				tx_done.msdu_id = __le16_to_cpu(msdu_id);
+				tx_done.tx_rate_code = resp->data_tx_completion_ct2.msdus[i].tx_rate_code;
+				tx_done.tx_rate_flags = resp->data_tx_completion_ct2.msdus[i].tx_rate_flags;
+				tx_done.mpdus_tried = resp->data_tx_completion_ct2.msdus[i].mpdus_tried;
+				tx_done.mpdus_failed = resp->data_tx_completion_ct2.msdus[i].mpdus_failed;
+			}
+			else {
+				msdu_id = resp->data_tx_completion_ct.msdus[i].id;
+				tx_done.msdu_id = __le16_to_cpu(msdu_id);
+				tx_done.tx_rate_code = resp->data_tx_completion_ct.msdus[i].tx_rate_code;
+				tx_done.tx_rate_flags = resp->data_tx_completion_ct.msdus[i].tx_rate_flags;
+			}
+
+			/* NOTE:  It seems only the first ampdu returns useful info here, at least with 'v1'
+			 * of the ath10k-ct wave-1 tx-rate logic.
+			 */
+
+			/*ath10k_warn(ar,
+				    "htt tx completion, msdu_id: %d  tx-rate-code: 0x%x tx-rate-flags: 0x%x  tried: %d  failed: %d\n",
+				    tx_done.msdu_id,
+				    tx_done.tx_rate_code,
+				    tx_done.tx_rate_flags,
+				    tx_done.mpdus_tried,
+				    tx_done.mpdus_failed);*/
 
 			/* kfifo_put: In practice firmware shouldn't fire off per-CE
 			 * interrupt and main interrupt (MSI/-X range case) for the same
@@ -2623,7 +2652,7 @@ ath10k_update_per_peer_tx_stats(struct ath10k *ar,
 		arsta->txrate.flags |= RATE_INFO_FLAGS_SHORT_GI;
 
 	arsta->txrate.nss = txrate.nss;
-	arsta->txrate.bw = txrate.bw + RATE_INFO_BW_20;
+	arsta->txrate.bw = ath10k_bw_to_mac80211_bw(txrate.bw);
 }
 
 static void ath10k_htt_fetch_peer_stats(struct ath10k *ar,

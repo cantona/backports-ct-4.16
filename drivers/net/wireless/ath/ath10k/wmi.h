@@ -2408,6 +2408,11 @@ struct wmi_resource_config {
 	#define ATH10k_DISABLE_WOW        0x40000
 	/* Ask CT firmware to send back per-chain management frame RSSI info */
 	#define ATH10k_MGT_CHAIN_RSSI_OK  0x80000
+	#define ATH10k_VDEV_CT_STATS_OK  0x100000
+        #define ATH10k_VDEV_CT_STA_MODE  0x200000 /* Try to use keys a bit like proxy-sta so we can do hw-crypt
+						   * with many stations to same AP. */
+	#define ATH10k_USE_TXCOMPL_TXRATE2 0x400000 /* Ask firmware for more extended tx-status in completion msgs */
+	/* NOTE:  High 8 bits are spoken for, 'features' */
 	__le32 rx_decap_mode;
 
 	/* what is the maximum number of scan requests that can be queued */
@@ -6369,6 +6374,7 @@ enum wmi_10x_peer_flags {
 	WMI_10X_PEER_SPATIAL_MUX = 0x00200000,
 	WMI_10X_PEER_VHT = 0x02000000,
 	WMI_10X_PEER_80MHZ = 0x04000000,
+	WMI_10X_PEER_PMF    = 0x10000000,
 	WMI_10X_PEER_160MHZ = 0x20000000
 };
 
@@ -6495,6 +6501,13 @@ struct wmi_10_4_peer_assoc_complete_cmd_ct {
 	struct wmi_10_4_peer_assoc_complete_cmd cmd;
 	struct wmi_ct_assoc_overrides overrides;
 } __packed;
+
+struct wmi_vdev_stats_ct {
+    u32 vdev_id;
+    u32 size; /* size in bytes of this struct */
+    u32 tsf_lo;
+    u32 tsf_hi;
+};
 
 struct wmi_peer_assoc_complete_arg {
 	u8 addr[ETH_ALEN];

@@ -11,16 +11,9 @@
  * published by the Free Software Foundation.
  */
 
-/** Adding these two here make backports build.  Otherwise, you get
- * in a tangled mess of bug.h related includes that end up not including
- * asm-generic/bug.h from the 'real' kernel, so build fails.
- * --Ben
- */
-#include <linux/kernel.h>
-#include <asm-generic/bug.h>
-
 #include <linux/jiffies.h>
 #include <linux/slab.h>
+#include <linux/kernel.h>
 #include <linux/skbuff.h>
 #include <linux/netdevice.h>
 #include <linux/etherdevice.h>
